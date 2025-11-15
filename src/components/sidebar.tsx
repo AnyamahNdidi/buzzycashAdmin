@@ -11,7 +11,7 @@ export function Sidebar() {
     { id: "dashboard", label: "DASHBOARD", icon: LayoutDashboard, href: "/" },
     { id: "activities", label: "GAME ACTIVITIES", icon: Gamepad2, href: "/game-activities" },
     { id: "users", label: "USER MANAGEMENT", icon: Users, href: "/users" },
-    { id: "payout", label: "WINNING PAYOUT", icon: Wallet, href: "/payout" },
+    { id: "payout", label: "WINNING PAYOUT", icon: Wallet, href: "/winning-payouts" },
     { id: "report", label: "INTERNAL REPORT", icon: FileText, href: "/reports" },
   ]
 

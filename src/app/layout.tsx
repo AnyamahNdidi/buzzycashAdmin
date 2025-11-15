@@ -6,8 +6,8 @@ import { Sidebar } from '@/components/sidebar' // Import Sidebar here
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Admin Dashboard',
-  description: 'Admin management dashboard',
+  title: 'Home Page',
+  description: 'redirect to login page',
 }
 
 export default function RootLayout({
@@ -18,11 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-          <Sidebar /> {/* Sidebar is now part of the layout */}
-          <div className="flex-1 flex flex-col">
-            {children} {/* Page content will be rendered here */}
-          </div>
+        <div className="">
+            {children} 
         </div>
       </body>
     </html>

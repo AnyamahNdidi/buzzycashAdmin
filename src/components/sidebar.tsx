@@ -8,7 +8,7 @@ export function Sidebar() {
   const pathname = usePathname()
 
   const sidebarItems = [
-    { id: "dashboard", label: "DASHBOARD", icon: LayoutDashboard, href: "/" },
+    { id: "dashboard", label: "DASHBOARD", icon: LayoutDashboard, href: "/dashboard" },
     { id: "activities", label: "GAME ACTIVITIES", icon: Gamepad2, href: "/game-activities" },
     { id: "users", label: "USER MANAGEMENT", icon: Users, href: "/users" },
     { id: "payout", label: "WINNING PAYOUT", icon: Wallet, href: "/winning-payouts" },

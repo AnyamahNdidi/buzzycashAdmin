@@ -9,7 +9,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
-import { ChevronDown, Search } from 'lucide-react'
+import { Search, ChevronDown } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface HeaderProps {
   title?: string
@@ -18,6 +20,8 @@ interface HeaderProps {
 }
 
 export function Header({ title = "Master Admin", showBack = false, onBack }: HeaderProps) {
+  const { logout } = useAuth();
+  const router = useRouter();
   return (
     <header className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-200/50 px-8 py-6">
       <div className="flex items-center justify-between">
@@ -55,7 +59,16 @@ export function Header({ title = "Master Admin", showBack = false, onBack }: Hea
           <DropdownMenuContent align="end" className="w-48 rounded-xl shadow-xl border-gray-200/50">
             <DropdownMenuItem className="rounded-lg">Profile</DropdownMenuItem>
             <DropdownMenuItem className="rounded-lg">Settings</DropdownMenuItem>
-            <DropdownMenuItem className="rounded-lg text-red-600">Logout</DropdownMenuItem>
+            <DropdownMenuItem 
+              className="rounded-lg text-red-600 focus:bg-red-50"
+              onSelect={(e) => {
+                e.preventDefault();
+                logout();
+                router.push('/login');
+              }}
+            >
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

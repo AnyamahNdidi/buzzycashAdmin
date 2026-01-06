@@ -5,6 +5,7 @@ import { useState } from 'react'
 import WinningPayoutsTable from '@/components/winning-payouts-table'
 import { Header } from '@/components/header'
 import { useRouter } from "next/navigation"
+import Image from 'next/image'
 export default function WinningPayoutsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -21,8 +22,20 @@ export default function WinningPayoutsPage() {
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-foreground">Country:</span>
               <div className="flex gap-2">
-                <img src="/flag-ghana.svg" alt="Ghana" className="w-6 h-6" />
-                <img src="/flag-nigeria.svg" alt="Nigeria" className="w-6 h-6" />
+                <Image 
+                  src="/flag-ghana.svg" 
+                  alt="Ghana" 
+                  width={24} 
+                  height={24}
+                  className="w-6 h-6" 
+                />
+                <Image 
+                  src="/flag-nigeria.svg" 
+                  alt="Nigeria" 
+                  width={24} 
+                  height={24}
+                  className="w-6 h-6" 
+                />
               </div>
             </div>
 

@@ -142,7 +142,7 @@ return (
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">DASHBOARD</h2>
-          <p className="text-gray-600">Welcome back! Here's what's happening with your platform.</p>
+          <p className="text-gray-600">Welcome back! Here&apos;s what&apos;s happening with your platform.</p>
         </div>
         <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-200/50">
           <span className="text-sm font-semibold text-gray-700">Country:</span>

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -187,15 +188,19 @@ export default function UserManagement() {
             <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-200/50">
               <span className="text-sm font-semibold text-gray-700">Country:</span>
               <div className="flex items-center gap-1">
-                <img
-                  src="/placeholder.svg?height=16&width=24"
+                <Image
+                  src="/placeholder.svg"
                   alt="Nigeria Flag"
-                  className="w-6 h-4 rounded-sm shadow-sm"
+                  className="rounded-sm shadow-sm"
+                  width={24}
+                  height={16}
                 />
-                <img
-                  src="/placeholder.svg?height=16&width=24"
+                <Image
+                  src="/placeholder.svg"
                   alt="Ghana Flag"
-                  className="w-6 h-4 rounded-sm shadow-sm"
+                  className="rounded-sm shadow-sm"
+                  width={24}
+                  height={16}
                 />
               </div>
             </div>

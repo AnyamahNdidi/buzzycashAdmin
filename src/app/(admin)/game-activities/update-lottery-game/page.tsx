@@ -2,6 +2,7 @@
 
 import { useState, useRef, ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -53,9 +54,23 @@ export default function UpdateLotteryGame() {
             <div className="flex flex-col items-center justify-center bg-gray-50 border border-gray-200 rounded-xl p-6 h-full">
               <div className="w-48 h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
                 {imagePreview ? (
-                  <img src={imagePreview || "/placeholder.svg"} alt="Game Thumbnail Preview" className="object-cover w-full h-full" />
+                  <Image 
+                    src={imagePreview} 
+                    alt="Game Thumbnail Preview" 
+                    className="object-cover w-full h-full"
+                    width={192}
+                    height={192}
+                    priority
+                  />
                 ) : (
-                  <img src="/placeholder.svg?height=192&width=192" alt="Game Thumbnail Placeholder" className="object-cover w-full h-full" />
+                  <Image 
+                    src="/placeholder.svg" 
+                    alt="Game Thumbnail Placeholder" 
+                    className="object-cover w-full h-full"
+                    width={192}
+                    height={192}
+                    priority
+                  />
                 )}
               </div>
               <input

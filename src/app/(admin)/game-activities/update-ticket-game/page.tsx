@@ -55,7 +55,7 @@ export default function UpdateTicketGame() {
                 {imagePreview ? (
                   <img src={imagePreview || "/placeholder.svg"} alt="Game Thumbnail Preview" className="object-contain w-full h-full p-4" />
                 ) : (
-                  <img src="/placeholder.svg?height=192&width=192" alt="Buzzycash Logo Placeholder" className="object-contain w-full h-full p-4" />
+                  <img src="/images/Buzzycash Logo (1).png"  alt="Buzzycash Logo Placeholder" className="object-contain w-full h-full p-4" />
                 )}
               </div>
               <input

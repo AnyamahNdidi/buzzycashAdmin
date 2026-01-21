@@ -64,7 +64,7 @@ export default function UpdateLotteryGame() {
                   />
                 ) : (
                   <Image 
-                    src="/placeholder.svg" 
+                    src="/images/Buzzycash Logo (1).png" 
                     alt="Game Thumbnail Placeholder" 
                     className="object-cover w-full h-full"
                     width={192}

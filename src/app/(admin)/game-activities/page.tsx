@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -173,10 +174,12 @@ export default function GameActivities() {
                 className="pl-10 w-80 bg-gray-50/50 border-gray-200 rounded-lg focus:bg-white transition-colors"
               />
             </div>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/25 rounded-lg">
-              <Plus className="w-4 h-4 mr-2" />
-              Add New
-            </Button>
+            <Link href="/game-activities/add-game">
+              <Button className="bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/25 rounded-lg">
+                <Plus className="w-4 h-4 mr-2" />
+                Add New
+              </Button>
+            </Link>
           </div>
         </div>
 

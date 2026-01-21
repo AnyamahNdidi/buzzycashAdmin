@@ -296,14 +296,20 @@ const countryData: Record<Country, {
 export default function Dashboard() {
   const [selectedCountry, setSelectedCountry] = useState<Country>('nigeria')
   const { metrics, stats } = countryData[selectedCountry]
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   return (
    <div className="flex min-h-screen flex-col">
-  <Header />
+    <Header 
+    title="Dashboard" 
+    onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+    isSidebarOpen={isSidebarOpen}
+    />
   <div className="flex-1 space-y-4 p-2 sm:p-4 md:p-6 lg:p-8 pt-4 sm:pt-6">
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
-      <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Dashboard</h2>
+    <div className="flex flex-col sm:flex-row sm:items-center justify-end space-y-2 sm:space-y-0">
+      {/* <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Dashboard</h2> */}
       <div className="flex items-center space-x-2">
+        <div>Country:</div>
         <div 
           className={`p-1 rounded-md cursor-pointer transition-all ${
             selectedCountry === 'nigeria' ? 'ring-2 ring-blue-500 scale-105' : 'opacity-80 hover:opacity-100'

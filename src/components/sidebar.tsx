@@ -2,10 +2,18 @@
 
 import { useRouter, usePathname } from "next/navigation"
 import { BarChart3, FileText, Gamepad2, LayoutDashboard, Users, Wallet } from 'lucide-react'
+interface SidebarProps {
+  onNavigate?: () => void
+}
 
-export function Sidebar() {
+export function Sidebar({ onNavigate }: SidebarProps) {
   const router = useRouter()
   const pathname = usePathname()
+
+   const handleNavigation = () => {
+    if (onNavigate) onNavigate()
+    // Your existing navigation logic
+  }
 
   const sidebarItems = [
     { id: "dashboard", label: "DASHBOARD", icon: LayoutDashboard, href: "/dashboard" },
@@ -43,7 +51,10 @@ export function Sidebar() {
             return (
               <li key={item.id}>
                 <button
-                  onClick={() => router.push(item.href)}
+                  onClick={() => {
+                    router.push(item.href)
+                    onNavigate?.()
+                  }}
                   className={`w-full flex items-center gap-3 px-3 py-3 text-xs font-medium rounded-xl transition-all duration-200 group ${
                     active
                       ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/25"

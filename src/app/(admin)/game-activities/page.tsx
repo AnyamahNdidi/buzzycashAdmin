@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,14 +13,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-// import { Sidebar } from "@/components/sidebar" // Removed: now in layout.tsx
 import { Header } from "@/components/header"
 import { ChevronDown, Search, Plus, ChevronLeft, ChevronRight, MoreVertical } from 'lucide-react'
+
+type Country = 'nigeria' | 'ghana';
 
 export default function GameActivities() {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState("ticket")
   const [currentPage, setCurrentPage] = useState(1)
+  const [selectedCountry, setSelectedCountry] = useState<Country>('nigeria')
 
   const gameTabs = [
     { id: "ticket", label: "Ticket Games", icon: "🎫" },
@@ -29,37 +32,53 @@ export default function GameActivities() {
   ]
 
   const gameData = {
-    ticket: [
-      { id: 1, name: "Weekend Allowee", type: "Single Draw", price: "200.00 NGN", status: "Enabled", icon: "🎯" },
-      { id: 2, name: "Corolla Budget", type: "Single Draw", price: "100,000.00 NGN", status: "Enabled", icon: "🎯" },
-      { id: 3, name: "Detty Ember", type: "Single Draw", price: "15,000.00 NGN", status: "Disabled", icon: "🎯" },
-      { id: 4, name: "Prayer Request", type: "Multiple Draw", price: "3,000.00 NGN", status: "Enabled", icon: "🎯" },
-      { id: 5, name: "Daily 2K", type: "Multiple Draw", price: "500.00 NGN", status: "Enabled", icon: "🎯" },
-      { id: 6, name: "Suya Funds", type: "Multiple Draw", price: "300.00 NGN", status: "Disabled", icon: "🎯" },
-      { id: 7, name: "Saturday Splash", type: "Single Draw", price: "500.00 NGN", status: "Enabled", icon: "🎯" },
-      { id: 8, name: "Oil Money", type: "Single Draw", price: "2,000.00 NGN", status: "Disabled", icon: "🎯" },
-      { id: 9, name: "Daily ChopChop", type: "Single Draw", price: "300.00 NGN", status: "Enabled", icon: "🎯" },
-    ],
-    lottery: [
-      { id: 1, name: "Buzzy Balls", type: "Single Draw", price: "200.00 NGN", status: "Enabled", icon: "🎱" },
-      { id: 2, name: "Bingo Pick", type: "Single Draw", price: "100,000.00 NGN", status: "Enabled", icon: "🎲" },
-      { id: 3, name: "Detty Ember", type: "Single Draw", price: "15,000.00 NGN", status: "Disabled", icon: "🎯" },
-      { id: 4, name: "Prayer Request", type: "Multiple Draw", price: "3,000.00 NGN", status: "Enabled", icon: "🎯" },
-    ],
-    virtual: [
-      { id: 1, name: "Lucky Scratch", type: "Single Draw", price: "200.00 NGN", status: "Enabled", icon: "🎰" },
-      { id: 2, name: "Aviator", type: "Single Draw", price: "100,000.00 NGN", status: "Enabled", icon: "✈️" },
-      { id: 3, name: "Spin 2 Win", type: "Multiple Draw", price: "3,000.00 NGN", status: "Enabled", icon: "🎡" },
-    ],
-    trivia: [
-      { id: 1, name: "Weekend Allowee", type: "Single Draw", price: "200.00 NGN", status: "Enabled", icon: "🎯" },
-      { id: 2, name: "Corolla Budget", type: "Single Draw", price: "100,000.00 NGN", status: "Enabled", icon: "🎯" },
-      { id: 3, name: "Detty Ember", type: "Single Draw", price: "15,000.00 NGN", status: "Disabled", icon: "🎯" },
-      { id: 4, name: "Prayer Request", type: "Multiple Draw", price: "3,000.00 NGN", status: "Enabled", icon: "🎯" },
-    ]
+    nigeria: {
+      ticket: [
+        { id: 1, name: "Weekend Allowee", type: "Single Draw", price: "200.00 NGN", status: "Enabled", icon: "🎯" },
+        { id: 2, name: "Corolla Budget", type: "Single Draw", price: "100,000.00 NGN", status: "Enabled", icon: "🎯" },
+        { id: 3, name: "Detty Ember", type: "Single Draw", price: "15,000.00 NGN", status: "Disabled", icon: "🎯" },
+        { id: 4, name: "Prayer Request", type: "Multiple Draw", price: "3,000.00 NGN", status: "Enabled", icon: "🎯" },
+        { id: 5, name: "Daily 2K", type: "Multiple Draw", price: "500.00 NGN", status: "Enabled", icon: "🎯" },
+      ],
+      lottery: [
+        { id: 1, name: "Buzzy Balls", type: "Single Draw", price: "200.00 NGN", status: "Enabled", icon: "�" },
+        { id: 2, name: "Bingo Pick", type: "Single Draw", price: "100,000.00 NGN", status: "Enabled", icon: "�" },
+        { id: 3, name: "Detty Ember", type: "Single Draw", price: "15,000.00 NGN", status: "Disabled", icon: "🎯" },
+        { id: 4, name: "Prayer Request", type: "Multiple Draw", price: "3,000.00 NGN", status: "Enabled", icon: "🎯" },
+      ],
+      virtual: [
+        { id: 1, name: "Lucky Scratch", type: "Single Draw", price: "200.00 NGN", status: "Enabled", icon: "�" },
+        { id: 2, name: "Aviator", type: "Single Draw", price: "100,000.00 NGN", status: "Enabled", icon: "✈️" },
+        { id: 3, name: "Spin 2 Win", type: "Multiple Draw", price: "3,000.00 NGN", status: "Enabled", icon: "🎡" },
+      ],
+      trivia: [
+        { id: 1, name: "Naija Trivia", type: "Single Draw", price: "200.00 NGN", status: "Enabled", icon: "🎯" },
+        { id: 2, name: "Naija Knowledge", type: "Single Draw", price: "500.00 NGN", status: "Enabled", icon: "🎯" },
+      ]
+    },
+    ghana: {
+      ticket: [
+        { id: 1, name: "Weekend Allowee", type: "Single Draw", price: "20.00 GHS", status: "Enabled", icon: "�" },
+        { id: 2, name: "Corolla Budget", type: "Single Draw", price: "10,000.00 GHS", status: "Enabled", icon: "🎯" },
+        { id: 3, name: "Detty Ember", type: "Single Draw", price: "1,500.00 GHS", status: "Disabled", icon: "🎯" },
+        { id: 4, name: "Prayer Request", type: "Multiple Draw", price: "300.00 GHS", status: "Enabled", icon: "�" },
+      ],
+      lottery: [
+        { id: 1, name: "Buzzy Balls GH", type: "Single Draw", price: "20.00 GHS", status: "Enabled", icon: "�" },
+        { id: 2, name: "Bingo Pick GH", type: "Single Draw", price: "10,000.00 GHS", status: "Enabled", icon: "�" },
+      ],
+      virtual: [
+        { id: 1, name: "Lucky Scratch GH", type: "Single Draw", price: "20.00 GHS", status: "Enabled", icon: "🎰" },
+        { id: 2, name: "Aviator GH", type: "Single Draw", price: "10,000.00 GHS", status: "Enabled", icon: "✈️" },
+      ],
+      trivia: [
+        { id: 1, name: "Ghana Trivia", type: "Single Draw", price: "20.00 GHS", status: "Enabled", icon: "🎯" },
+        { id: 2, name: "Ghana Knowledge", type: "Single Draw", price: "50.00 GHS", status: "Enabled", icon: "🎯" },
+      ]
+    }
   }
 
-  const currentGames = gameData[activeTab as keyof typeof gameData] || []
+  const currentGames = gameData[selectedCountry][activeTab as keyof typeof gameData.nigeria] || []
 
   const handleEditClick = (gameType: string, gameId: number) => {
     if (gameType === "ticket") {
@@ -74,7 +93,9 @@ export default function GameActivities() {
     <>
       <Header showBack onBack={() => router.push('/')} />
       
-      <main className="flex-1 p-8 overflow-auto">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
+        {/* Country Selector */}
+        
         {/* Game Tabs */}
         <div className="flex items-center gap-4 mb-8">
           {gameTabs.map((tab) => (
@@ -96,15 +117,51 @@ export default function GameActivities() {
         {/* Controls */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-200/50">
-              <span className="text-sm font-semibold text-gray-700">Country:</span>
-              <div className="flex items-center gap-1">
-                <div className="w-6 h-4 bg-green-500 rounded-sm shadow-sm"></div>
-                <div className="w-6 h-4 bg-yellow-500 rounded-sm shadow-sm"></div>
-                <div className="w-6 h-4 bg-red-500 rounded-sm shadow-sm"></div>
-              </div>
+           <div className="flex items-center justify-end ">
+          <div className="flex items-center gap-3 bg-white p-2 rounded-xl  border border-gray-200/50">
+            <span className="text-sm font-medium text-gray-600">Country:</span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setSelectedCountry('nigeria')}
+                className={`p-1 rounded-md transition-all ${
+                  selectedCountry === 'nigeria' 
+                    ? 'ring-2 ring-blue-500 scale-105' 
+                    : 'opacity-80 hover:opacity-100'
+                }`}
+                title="Nigeria"
+              >
+                <Image 
+                  src="/images/NIG.png"
+                  alt="Nigeria"
+                  width={32}
+                  height={24}
+                  className="w-8 h-6 object-cover rounded"
+                />
+              </button>
+              <button
+                onClick={() => setSelectedCountry('ghana')}
+                className={`p-1 rounded-md transition-all ${
+                  selectedCountry === 'ghana' 
+                    ? 'ring-2 ring-blue-500 scale-105' 
+                    : 'opacity-80 hover:opacity-100'
+                }`}
+                title="Ghana"
+              >
+                <Image 
+                  src="/images/GHN.png"
+                  alt="Ghana"
+                  width={32}
+                  height={24}
+                  className="w-8 h-6 object-cover rounded"
+                />
+              </button>
             </div>
-            <Badge variant="secondary" className="bg-orange-100 text-orange-700 hover:bg-orange-200">
+            <div className="text-sm font-medium text-gray-700">
+              {selectedCountry === 'nigeria' ? 'Nigeria (NGN)' : 'Ghana (GHS)'}
+            </div>
+          </div>
+        </div>
+            <Badge variant="secondary" className=" text-orange-700 border-orange-700 py-2 px-2 hover:bg-orange-200">
               Pending Draw
             </Badge>
           </div>

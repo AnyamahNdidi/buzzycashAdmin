@@ -20,9 +20,9 @@ export default function AdimLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-          <Sidebar /> {/* Sidebar is now part of the layout */}
+          <Sidebar /> 
           <div className="flex-1 flex flex-col">
-            {children} {/* Page content will be rendered here */}
+            {children} 
           </div>
         </div>
       </body>

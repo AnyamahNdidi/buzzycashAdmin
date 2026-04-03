@@ -19,8 +19,10 @@ export function Sidebar({ onNavigate }: SidebarProps) {
     { id: "dashboard", label: "DASHBOARD", icon: LayoutDashboard, href: "/dashboard" },
     { id: "activities", label: "GAME ACTIVITIES", icon: Gamepad2, href: "/game-activities" },
     { id: "users", label: "USER MANAGEMENT", icon: Users, href: "/users" },
+    { id: "transactions", label: "TRANSACTIONS", icon: Wallet, href: "/transactions" },
     { id: "payout", label: "WINNING PAYOUT", icon: Wallet, href: "/winning-payouts" },
     { id: "report", label: "INTERNAL REPORT", icon: FileText, href: "/reports" },
+    { id: "referrals", label: "REFERRALS", icon: FileText, href: "/referrals" },
   ]
 
   const isActive = (href: string) => {

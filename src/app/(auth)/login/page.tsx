@@ -1,16 +1,34 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthRedux } from '@/lib/redux/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Eye, EyeOff } from 'lucide-react';
+
+// Zod schema for login validation
+const loginSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 const BuzzycashLogin: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, isLoading } = useAuthRedux();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError: setFormError,
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -18,31 +36,20 @@ const BuzzycashLogin: React.FC = () => {
     }
   }, [isAuthenticated, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    
-    if (!email || !password) {
-      setError('Please enter both email and password');
-      return;
-    }
-
+  const onSubmit = async (data: LoginFormData) => {
     try {
-      setIsLoading(true);
-      const success = await login(email, password);
+      const success = await login(data.email, data.password);
       if (!success) {
-        setError('Invalid email or password');
+        setFormError('root', { message: 'Invalid email or password' });
       }
     } catch (err) {
-      setError('An error occurred during login');
+      setFormError('root', { message: 'An error occurred during login' });
       console.error(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex min-h-screen bg-gray-50">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex min-h-screen bg-gray-50">
       {/* Left Sidebar with curved design */}
       <div className="relative w-1/4 min-w-[350px]">
         {/* Gradient background */}
@@ -84,21 +91,34 @@ const BuzzycashLogin: React.FC = () => {
               <input
                 type="email"
                 placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-0 py-3 border-0 border-b-2 border-gray-300 focus:border-orange-500 focus:outline-none text-gray-700 placeholder-gray-400 bg-transparent transition-colors"
+                {...register('email')}
+                className={`w-full px-0 py-3 border-0 border-b-2 ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:border-orange-500 focus:outline-none text-gray-700 placeholder-gray-400 bg-transparent transition-colors`}
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              )}
             </div>
 
             {/* Password Input */}
             <div>
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-0 py-3 border-0 border-b-2 border-gray-300 focus:border-orange-500 focus:outline-none text-gray-700 placeholder-gray-400 bg-transparent transition-colors"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  {...register('password')}
+                  className={`w-full px-0 py-3 pr-10 border-0 border-b-2 ${errors.password ? 'border-red-500' : 'border-gray-300'} focus:border-orange-500 focus:outline-none text-gray-700 placeholder-gray-400 bg-transparent transition-colors`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+              )}
             </div>
 
             {/* Forgot Password and Submit Button */}
@@ -110,20 +130,20 @@ const BuzzycashLogin: React.FC = () => {
               >
                 Forgot Password
               </button>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="px-12 py-3 bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold rounded hover:from-orange-500 hover:to-red-600 transition-all shadow-md hover:shadow-lg"
-              >
-                {isLoading ? 'Logging in...' : 'Log In'}
-              </button>
+             <button
+              type="submit"
+              disabled={isSubmitting || isLoading}
+              className="px-12 py-3 bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold rounded hover:from-orange-500 hover:to-red-600 transition-all shadow-md hover:shadow-lg disabled:opacity-50"
+            >
+              {isSubmitting || isLoading ? 'Logging in...' : 'Log In'}
+            </button>
             </div>
           </div>
         </div>
       </div>
-      {error && (
+      {errors.root && (
         <div className="fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-          {error}
+          {errors.root.message}
         </div>
       )}
     </form>

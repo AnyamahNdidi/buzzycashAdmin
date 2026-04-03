@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Search, ChevronDown, Menu, X } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
-import { useAuth } from '@/contexts/AuthContext'
+import { useAuthRedux } from '@/lib/redux/hooks/useAuth'
 
 interface HeaderProps {
   title?: string
@@ -30,7 +30,7 @@ export function Header({
   onMenuToggle,
   isSidebarOpen = false
 }: HeaderProps) {
-  const { logout } = useAuth();
+  const { logout } = useAuthRedux();
   const router = useRouter();
 
   return (
@@ -103,7 +103,6 @@ export function Header({
                 onSelect={(e) => {
                   e.preventDefault();
                   logout();
-                  router.push('/login');
                 }}
               >
                 Logout
